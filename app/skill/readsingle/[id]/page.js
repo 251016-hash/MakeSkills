@@ -1,4 +1,6 @@
+"use client"
 import Image from "next/image"  
+import { useEffect, useState } from "react"
 import Link from "next/link" 
 
 const skillTypeLabel = {
@@ -7,16 +9,30 @@ const skillTypeLabel = {
     heal: "回復"
 }
 
-const getSingleItem = async(id) => {
-    const response = await fetch(`/api/skill/readsingle/${id}`, {cache: "no-store"})
-    const jsonData = await response.json() 
-    const singleItem = jsonData.singleItem
-    return singleItem 
-}  
+const ReadSingleItem = () => {
+    
+    const params = useParams()
+    const [singleItem, setSingleItem] = useState(null)
 
-const ReadSingleItem = async(context) => {
-    const resolvedParams = await context.params
-    const singleItem = await getSingleItem(resolvedParams.id)
+    useEffect(() => {
+        const getSingleItem = async() => {
+            const response = await fetch(
+                `/api/skill/readsingle/${params.id}`,
+                {
+                    cache: "no-store"
+                }
+            )
+            const jsonData = await response.json()
+            setSingleItem(jsonData.singleItem)
+        }
+        if(params.id){
+            getSingleItem()
+        }
+    }, [params.id])
+    
+    if(!singleItem){
+        return <h1>Loading...</h1>
+    }
     return (
         <div className="grid-container-si">
             <div>
