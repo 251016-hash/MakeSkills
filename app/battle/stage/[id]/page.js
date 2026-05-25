@@ -95,18 +95,21 @@ const BattlePage = () => {
         // 攻撃
         if(skill.type === "attack"){
             let damage = skill.power
-            if(enemyShield > 0){
-                if(enemyShield >= damage){
+            let currentShield = enemyShield
+            if(currentShield > 0){
+                if(currentShield >= damage){
                     // シールドで全部防ぐ
-                    setEnemyShield(prev => prev - damage)
+                    setEnemyShield(currentShield - damage)
                     damage = 0
                 } else {
                     // シールドを破壊して残りがHPへ
-                    damage = damage - enemyShield
+                    damage = damage - currentShield
                     setEnemyShield(0)
                 }
             }
-            setEnemyHp(prev => prev - damage)
+            if(damage > 0){
+                setEnemyHp(prev => prev - damage)
+            }
             setLogs(prev => [
                 ...prev,
                 `${skill.title}！ 敵に${damage}ダメージ！`
@@ -216,7 +219,7 @@ const BattlePage = () => {
     }
     useEffect(() => {
         if(enemyHp <= 0 && enemy){
-            if(stage < 4){
+            if(stage < 3){
                 alert("勝利！次のステージへ！")
                 nextStage()
             }else{
