@@ -8,6 +8,18 @@ import { useRouter, useParams } from "next/navigation"
 const max_ap = 5
 const max_hp = 100
 
+const actionTypeLabel = {
+    attack: "攻撃",
+    defend: "防御",
+    heal: "回復"
+}
+
+const actionIcon = {
+    attack: "⚔️",
+    defend: "🛡️",
+    heal: "💚"
+}
+
 const BattlePage = () => {
 
     const router = useRouter()
@@ -39,7 +51,7 @@ const BattlePage = () => {
 
     useEffect(() => {
         const getRandomEnemy = async () => {
-            const response = await fetch(`http://localhost:3000/api/battle/randomEnemy/${stage}`)
+            const response = await fetch(`https://make-skills-ruby.vercel.app/api/battle/randomEnemy/${stage}`)
             const jsonData = await response.json()
             setEnemy(jsonData.randomEnemy)
 
@@ -240,7 +252,7 @@ const BattlePage = () => {
                         {
                             enemyNextAction && (
                                 <>
-                                    <p>{enemyNextAction.actionType}</p>
+                                    <p>{actionTypeLabel[enemyNextAction.actionType]}{actionIcon[enemyNextAction.actionType]}</p>
                                     <p>{enemyNextAction.power}</p>
                                 </>
                             )
@@ -325,7 +337,7 @@ const BattlePage = () => {
 
                         <h3>{skill.title}</h3>
 
-                        <p>{skill.type}</p>
+                        <p>{actionType[skill.type]},{actionIcon[skill.type]}</p>
 
                         <p>AP : {skill.cost}</p>
 

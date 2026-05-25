@@ -77,7 +77,7 @@ const UpdateItem = (context) => {
         e.preventDefault() 
         try{
             const resolvedParams = await context.params
-            const response = await fetch(`http://localhost:3000/api/enemy/update/${resolvedParams.id}`, {
+            const response = await fetch(`https://make-skills-ruby.vercel.app/api/enemy/update/${resolvedParams.id}`, {
                 method: "PUT",
                 headers: { 
                     "Accept": "application/json", 

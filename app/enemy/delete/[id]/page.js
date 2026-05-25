@@ -38,7 +38,7 @@ const DeleteItem = (context) => {
     useEffect(() => {
         const getSingleItem = async() => {
             const resolvedParams = await context.params
-            const response = await fetch(`http://localhost:3000/api/enemy/readsingle/${resolvedParams.id}`, {cache: "no-store"})
+            const response = await fetch(`https://make-skills-ruby.vercel.app/api/enemy/readsingle/${resolvedParams.id}`, {cache: "no-store"})
             const jsonData = await response.json() 
             const singleItem = jsonData.singleItem
             setName(singleItem.name)
