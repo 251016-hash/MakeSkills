@@ -59,7 +59,7 @@ const UpdateItem = (context) => {
         }
         try{
             const resolvedParams = await context.params
-            const response = await fetch(`http://localhost:3000/api/skill/update/${resolvedParams.id}`, {
+            const response = await fetch(`https://make-skills-ruby.vercel.app/api/skill/update/${resolvedParams.id}`, {
                 method: "PUT",
                 headers: { 
                     "Accept": "application/json", 

@@ -59,7 +59,7 @@ const BattlePage = () => {
     }, [enemy])
 
     const getSkills = async() => {
-        const response = await fetch(`http://localhost:3000/api/skill/readall?email=${loginUserEmail}`)
+        const response = await fetch(`https://make-skills-ruby.vercel.app/api/skill/readall?email=${loginUserEmail}`)
         const jsonData = await response.json()
         const shuffled = [...jsonData.allItems].sort(() => 0.5 - Math.random())
         setSkills(shuffled.slice(0, 5))

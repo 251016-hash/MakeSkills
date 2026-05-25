@@ -8,7 +8,7 @@ const skillTypeLabel = {
 }
 
 const getSingleItem = async(id) => {
-    const response = await fetch(`http://localhost:3000/api/skill/readsingle/${id}`, {cache: "no-store"})
+    const response = await fetch(`https://make-skills-ruby.vercel.app/api/skill/readsingle/${id}`, {cache: "no-store"})
     const jsonData = await response.json() 
     const singleItem = jsonData.singleItem
     return singleItem 
