@@ -337,7 +337,7 @@ const BattlePage = () => {
 
                         <h3>{skill.title}</h3>
 
-                        <p>{actionType[skill.type]},{actionIcon[skill.type]}</p>
+                        <p>{actionTypeLabel[skill.type]},{actionIcon[skill.type]}</p>
 
                         <p>AP : {skill.cost}</p>
 
