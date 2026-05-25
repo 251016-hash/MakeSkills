@@ -2,7 +2,7 @@
 import Image from "next/image"  
 import { useEffect, useState } from "react"
 import Link from "next/link" 
-import useAuth from "../../utils/useAuth"
+import { useParams } from "next/navigation"
 
 const skillTypeLabel = {
     attack: "攻撃",
@@ -12,17 +12,13 @@ const skillTypeLabel = {
 
 const ReadSingleItem = () => {
     
-    const loginUserEmail = useAuth()
-
-    const [singleItem, setSingleItem] = useState([])
+    const params = useParams()
+    const [singleItem, setSingleItem] = useState(null)
 
     useEffect(() => {
-
-        if(!loginUserEmail) return
-
         const getSingleItem = async() => {
             const response = await fetch(
-                `/api/skill/readsingle?email=${loginUserEmail}`,
+                `/api/skill/readsingle/${params.id}`,
                 {
                     cache: "no-store"
                 }
@@ -30,8 +26,10 @@ const ReadSingleItem = () => {
             const jsonData = await response.json()
             setSingleItem(jsonData.singleItem)
         }
-        getSingleItem()
-    }, [loginUserEmail])
+        if(params.id){
+            getSingleItem()
+        }
+    }, [params.id])
 
     if(!singleItem){
         return <h1>Loading...</h1>
