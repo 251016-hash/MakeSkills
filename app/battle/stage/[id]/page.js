@@ -51,7 +51,7 @@ const BattlePage = () => {
 
     useEffect(() => {
         const getRandomEnemy = async () => {
-            const response = await fetch(`https://make-skills-ruby.vercel.app/api/battle/randomEnemy/${stage}`)
+            const response = await fetch(`/api/battle/randomEnemy/${stage}`)
             const jsonData = await response.json()
             setEnemy(jsonData.randomEnemy)
 
@@ -71,7 +71,7 @@ const BattlePage = () => {
     }, [enemy])
 
     const getSkills = async() => {
-        const response = await fetch(`https://make-skills-ruby.vercel.app/api/skill/readall?email=${loginUserEmail}`)
+        const response = await fetch(`/api/skill/readall?email=${loginUserEmail}`)
         const jsonData = await response.json()
         const shuffled = [...jsonData.allItems].sort(() => 0.5 - Math.random())
         setSkills(shuffled.slice(0, 5))
@@ -216,8 +216,13 @@ const BattlePage = () => {
     }
     useEffect(() => {
         if(enemyHp <= 0 && enemy){
-            alert("勝利！次のステージへ！")
-            nextStage()
+            if(stage < 4){
+                alert("勝利！次のステージへ！")
+                nextStage()
+            }else{
+                alert("ゲームクリア！")
+                router.push("/")
+            }
         }
     }, [enemyHp])
     useEffect(() => {
