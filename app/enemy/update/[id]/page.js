@@ -139,7 +139,7 @@ const UpdateItem = (context) => {
                         <button>作成</button>
                     </form>
                     <Link href="/enemy/readall">
-                        <h3>スキル一覧へ戻る</h3>
+                        <h3>敵モブ一覧へ戻る</h3>
                     </Link>
                 </div>
             )
