@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -7,15 +8,21 @@ const stageLabel = {
     3: "ステージ３"
 }
 
-const getAllItems = async() => {
-    const response = await fetch("/api/enemy/readall", {cache: "no-store"})
-    const jsonData = await response.json()
-    const allItems = jsonData.allItems
-    return allItems
-}
-
 const ReadAllItems = async() => {
-    const allItems = await getAllItems()
+    useEffect(() => {
+        if(!loginUserEmail) return
+        const getAllItems = async() => {
+            const response = await fetch(
+                `/api/enemy/readall?email=${loginUserEmail}`,
+                {
+                    cache: "no-store"
+                }
+            )
+            const jsonData = await response.json()
+            setAllItems(jsonData.allItems)
+        }
+        getAllItems()
+    }, [loginUserEmail])
     return (
         <div>
             <div className="top-buttons">
