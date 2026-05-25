@@ -8,7 +8,7 @@ const stageLabel = {
 }
 
 const getAllItems = async() => {
-    const response = await fetch("https://make-skills-ruby.vercel.app/api/enemy/readall", {cache: "no-store"})
+    const response = await fetch("/api/enemy/readall", {cache: "no-store"})
     const jsonData = await response.json()
     const allItems = jsonData.allItems
     return allItems

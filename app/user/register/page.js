@@ -13,7 +13,7 @@ const Register = () => {
     const handleSubmit = async(e) => {
         e.preventDefault()  
         try{
-            const response = await fetch("https://make-skills-ruby.vercel.app/api/user/register", {
+            const response = await fetch("/api/user/register", {
                 method: "POST",
                 headers: { 
                     "Accept": "application/json", 

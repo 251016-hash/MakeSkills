@@ -23,7 +23,7 @@ const ReadAllItems = () => {
         const getAllItems = async() => {
 
             const response = await fetch(
-                `https://make-skills-ruby.vercel.app/api/skill/readall?email=${loginUserEmail}`,
+                `/api/skill/readall?email=${loginUserEmail}`,
                 {
                     cache: "no-store"
                 }

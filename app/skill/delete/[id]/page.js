@@ -20,7 +20,7 @@ const DeleteItem = (context) => { //(context)を{params}に変える場合 const
     useEffect(() => {
         const getSingleItem = async() => {
             const resolvedParams = await context.params
-            const response = await fetch(`https://make-skills-ruby.vercel.app/api/skill/readsingle/${resolvedParams.id}`, {cache: "no-store"})
+            const response = await fetch(`/api/skill/readsingle/${resolvedParams.id}`, {cache: "no-store"})
             const jsonData = await response.json() 
             const singleItem = jsonData.singleItem
             setTitle(singleItem.title)
@@ -38,7 +38,7 @@ const DeleteItem = (context) => { //(context)を{params}に変える場合 const
         e.preventDefault() 
         try{
             const resolvedParams = await context.params
-            const response = await fetch(`http://localhost:3000/api/skill/delete/${resolvedParams.id}`, {
+            const response = await fetch(`/api/skill/delete/${resolvedParams.id}`, {
                 method: "DELETE",
                 headers: { 
                     "Accept": "application/json", 

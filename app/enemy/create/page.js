@@ -57,7 +57,7 @@ const CreateItem = () => {
         }
 
         try{
-            const response = await fetch("https://make-skills-ruby.vercel.app/api/enemy/create", {
+            const response = await fetch("/api/enemy/create", {
                 method: "POST",
                 headers: { 
                     "Accept": "application/json", 
