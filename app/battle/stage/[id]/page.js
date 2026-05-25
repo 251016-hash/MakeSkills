@@ -272,7 +272,7 @@ const BattlePage = () => {
                 <div className="status-box player-box">
                     <h2>プレイヤー</h2>
 
-                    <p>HP : {playerHp}</p>
+                    <p>HP : {playerHp}/100</p>
                     <p>AP : {playerAp}</p>
                     <p>シールド : {playerShield}</p>
 
