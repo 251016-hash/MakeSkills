@@ -1,6 +1,8 @@
 "use client"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import useAuth from "../../utils/useAuth"
 
 const stageLabel = {
     1: "ステージ１",
@@ -8,7 +10,11 @@ const stageLabel = {
     3: "ステージ３"
 }
 
-const ReadAllItems = async() => {
+const ReadAllItems = () => {
+
+    const loginUserEmail = useAuth()
+    const [allItems, setAllItems] = useState([])
+    
     useEffect(() => {
         if(!loginUserEmail) return
         const getAllItems = async() => {
