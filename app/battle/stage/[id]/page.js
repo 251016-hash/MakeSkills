@@ -49,6 +49,8 @@ const BattlePage = () => {
 
     const [usedSkills, setUsedSkills] = useState([])
 
+    const [playerName, setPlayerName] = useState("")
+
     useEffect(() => {
         const getRandomEnemy = async () => {
             const response = await fetch(`/api/battle/randomEnemy/${stage}`)
@@ -69,6 +71,19 @@ const BattlePage = () => {
         if (!enemy) return
         predictEnemyAction()
     }, [enemy])
+    
+    useEffect(() => {
+
+        if(!loginUserEmail) return
+
+        const getUserName = async() => {
+            const response = await fetch(`/api/battle/playerName?email=${loginUserEmail}`)
+            const jsonData =
+                await response.json()
+            setPlayerName(jsonData.name)
+        }
+        getUserName()
+    }, [loginUserEmail])
 
     const getSkills = async() => {
         const response = await fetch(`/api/skill/readall?email=${loginUserEmail}`)
@@ -231,7 +246,7 @@ const BattlePage = () => {
     useEffect(() => {
         if(playerHp <= 0){
             alert("敗北...")
-            router.push("/") // トップへ
+            router.push("/")
         }
     }, [playerHp])
 
@@ -240,23 +255,14 @@ const BattlePage = () => {
     }
     return (
     <div className="rpg-container">
-
-        {/* 上部分 */}
         <div className="battle-main">
-
-            {/* 左側 */}
             <div className="left-panel">
-
-                {/* 敵情報 */}
                 <div className="status-box enemy-box">
                     <h2>{enemy.name}</h2>
-
                     <p>HP : {enemyHp}</p>
                     <p>シールド : {enemyShield}</p>
-
                     <div className="next-action">
                         <h3>次の行動</h3>
-
                         {
                             enemyNextAction && (
                                 <>
@@ -267,110 +273,58 @@ const BattlePage = () => {
                         }
                     </div>
                 </div>
-
-                {/* プレイヤー情報 */}
                 <div className="status-box player-box">
                     <h2>プレイヤー</h2>
-
+                    <p>名前 : {playerName}</p>
                     <p>HP : {playerHp}/100</p>
                     <p>AP : {playerAp}</p>
                     <p>シールド : {playerShield}</p>
-
-                    <button
-                        className="battle-button"
-                        onClick={endTurn}
-                        disabled={turn !== "player"}
-                    >
+                    <button className="battle-button" onClick={endTurn} disabled={turn !== "player"}>
                         ターン終了
                     </button>
-
-                    <button
-                        className="battle-button"
-                        onClick={() => router.push("/")}
-                    >
+                    <button className="battle-button" onClick={() => router.push("/")}>
                         トップへ戻る
                     </button>
                 </div>
             </div>
-
-            {/* 真ん中 */}
             <div className="center-panel">
-
                 <div className="enemy-image-box">
-                    <img
-                        src={enemy.image}
-                        alt={enemy.name}
-                        className="enemy-image"
-                    />
+                    <img src={enemy.image} alt={enemy.name} className="enemy-image"/>
                 </div>
-
                 <h1 className="stage-title">
                     STAGE {stage}
                 </h1>
-
                 <h2 className="turn-title">
-                    {turn === "player"
-                        ? "PLAYER TURN"
-                        : "ENEMY TURN"}
+                    {turn === "player" ? "PLAYER TURN" : "ENEMY TURN"}
                 </h2>
             </div>
-
-            {/* 右側 */}
             <div className="log-panel">
-
                 <h2>戦闘ログ</h2>
-
                 <div className="log-box">
-
                     {
                         [...logs].reverse().map((log, index) => (
                             <p key={index}>{log}</p>
                         ))
                     }
-
                 </div>
             </div>
         </div>
-
-        {/* 下部分 */}
         <div className="skill-panel">
-
             {
                 skills.map(skill => (
-
-                    <div
-                        key={skill._id}
-                        className="skill-card"
-                    >
-
+                    <div key={skill._id} className="skill-card">
                         <h3>{skill.title}</h3>
-
                         <p>{actionTypeLabel[skill.type]},{actionIcon[skill.type]}</p>
-
                         <p>AP : {skill.cost}</p>
-
                         <p>威力 : {skill.power}</p>
-
-                        <button
-                            className="skill-button"
-                            onClick={() => useSkill(skill)}
-                            disabled={usedSkills.includes(skill._id)}
-                        >
-                            {
-                                usedSkills.includes(skill._id)
-                                ? "使用済み"
-                                : "使用"
-                            }
+                        <button className="skill-button" onClick={() => useSkill(skill)} disabled={usedSkills.includes(skill._id)}>
+                            {usedSkills.includes(skill._id) ? "使用済み" : "使用"}
                         </button>
-
                     </div>
                 ))
             }
-
         </div>
-
     </div>
-
     )
 }
 
